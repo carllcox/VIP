@@ -8,6 +8,7 @@ import requests
 import sys
 import time
 import os
+from SentimentClassifier import SentimentClassifier
 
 logging.basicConfig(filename='flask-server.log', level=logging.DEBUG)
 
@@ -34,6 +35,11 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 db = firebase.database()
 storage = firebase.storage()
+
+classifier = SentimentClassifier()
+classifier.aggregateTrainingData()
+classifier.trainClassifier()
+
 
 TOP_N = 3
 DEFAULT_PTS = 0
@@ -204,7 +210,7 @@ def show_feed():
         postEntry.append(posts[key]['postDesc'])
         postData.append(postEntry)
 
-    print('Showing Data:', postData)
+    # print('Showing Data:', postData)
 
     return render_template('feedTemplate.html', postData=postData)
 
@@ -305,7 +311,11 @@ def _store_scenario_data(hypothesis, comments, scenario_title, cur_iter):
             scenario_title=scenario_title,
             img=str(int(cur_iter)-1))
         db.child(comments_path).set(comments, token=id_token) 
+        print("comment data:", comments)
         print('Stored comments at:', comments_path)
+        print("Sentiment Analysis Executing ------------------------------------")
+        classifier.predictionOutput(comments)
+        print("-----------------------------------------------------------------")
     else:
         print('No comments submitted for scenario:', scenario_title)
 
@@ -344,7 +354,7 @@ def _build_url_dict(id_token=None):
         # print("urls:", urls)
         # print("description_urls", description_urls)
         # print("prompt_urls", prompt_urls)
-    print('loaded scenarios:', scenario_title_list)
+    print('\nloaded scenarios:', scenario_title_list)
     return urls, description_urls, prompt_urls
 
 
