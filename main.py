@@ -240,7 +240,6 @@ def show_chat():
         for key, value in requestedChatData.items():
             # print(key, value)
             chatData.append(value)
-
     print(chatData)
 
     # STEPS:
