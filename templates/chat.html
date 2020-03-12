@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>IP Crowd - Feed</title>
+    <title>IP Crowd - Chat</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
@@ -42,61 +42,59 @@
       </script>
 
 
-    <style>
+<!--     <style>
       #header {
         background: url(https://images.unsplash.com/photo-1415795854641-f4a487a0fdc8?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80) center center / cover no-repeat ;
       }
 
 
+    </style> -->
+
+    <style>
+      .positive {
+        background-color:#66ff66
+      }
+      .negative {
+        background-color:#ff5050
+      }
     </style>
+
+
   </head>
 
   <body>
 
-<!--
+
   <nav class="bg-dark navbar-dark">
-    <div class="container">
-      <a href="" class="navbar-brand"><i class="fas fa-tree mr-2"></i>Forest</a>
-    </div>
   </nav>
   <section id="header" class="jumbotron text-center">
-       <h1 class="display-3">FOREST</h1>
-       <p class="lead">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-       <a href="" class="btn btn-primary">Click</a>
-       <a href="" class="btn btn-secondary">Click</a>
+       <h1 class="display-3">{{ originalPostData["postTitle"] }}</h1>
+       <p class="lead">" {{ originalPostData["postDesc"] }}  "</p>
+       <p class="user"> - {{ originalPostData["postUser"] }}</p>
   </section>
--->
-    <br><br><br>
 
-
-
-    
+  <br><br><br>
   <section id="gallery">
     <div class="container">
-
-      <form action="{{ url_for('show_chat') }}" method="post">
       <div class="row">
-      {% for post in postData %}
-      <div class="col-lg-4 mb-4">
-        <div class="card">
-          <img src="{{ post[0] }}" alt="" class="card-img-top">
-          <div class="card-body">
-            <h5 class="card-title">{{ post[1] }}</h5>
-            <p class="card-text">{{ post[2] }}</p>
-
-            <button class="btn btn-outline-success btn-sm" name="postID" value="{{ post[3] }}">Read More</button>
-
-<!--             <input type="hidden" name="postTitle" value="{{ post[1] }}" />
-            <input type="hidden" name="postText" value="{{ post[2] }}" /> -->
-
-            <button class="btn btn-outline-danger btn-sm" disabled> <i class="far fa-heart"></i></button>
+        {% for post in chatData %}
+        <!-- class="col-lg-4 mb-4" -->
+        <div class="col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ post["user"] }}</h5>
+              {% if post["sentiment"] == 0 %}
+<!--               <p class="card-text">{{ post["comment"] }}</p>
+ -->          <p class="positive">{{ post["comment"] }}</p>
+              {% else %}
+              <p class="negative">{{ post["comment"] }}</p>
+              {% endif %}
+            </div>
           </div>
-         </div>
+        </div>
+        {% endfor %} 
       </div>
-      {% endfor %}
     </div>
-
-  </div>
   </section>
 
   </body>

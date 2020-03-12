@@ -208,12 +208,50 @@ def show_feed():
         postEntry.append(posts[key]['imgURL'])
         postEntry.append(posts[key]['postTitle'])
         postEntry.append(posts[key]['postDesc'])
+        postEntry.append(key)
         postData.append(postEntry)
 
     # print('Showing Data:', postData)
 
     return render_template('feedTemplate.html', postData=postData)
 
+
+@app.route('/chat', methods=["GET", "POST"])
+def show_chat():
+
+    # print('RECEIVING DATA:', request.form)
+    postID = request.form.get("postID")
+    print(postID)
+
+    #original post data from firebase
+    requestedOPD = db.child("posts").child("Georgia Tech Disability Services").child(postID).get().val()
+
+    originalPostData = {
+        "postTitle": requestedOPD["postTitle"],
+        "postDesc": requestedOPD["postDesc"],
+        "postUser": requestedOPD["user"]
+     }
+
+    print(originalPostData)
+
+    requestedChatData = db.child("chats").child(postID).get().val()
+    chatData = []
+    if requestedChatData:
+        for key, value in requestedChatData.items():
+            # print(key, value)
+            chatData.append(value)
+
+    print(chatData)
+
+    # STEPS:
+    #1. Populate Original Post Data at the top -> originalPostData
+    #2. Populate all the chat data directly underneath -> chatData
+    #3. Create fake chat data on firebase
+    #4. Create a sendmessage method
+        #5. In the sendmessage method do the sentiment analysis before pushing to firebase
+
+    return render_template("chat.html", originalPostData=originalPostData,
+        chatData=chatData)
 
 
 def _get_id_token():
