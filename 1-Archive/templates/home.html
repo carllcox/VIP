@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>IP Crowd - Home</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
+<!--        <link rel="stylesheet" href="../static/assets/css/main.css">-->
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+
+	<style>
+		.newspaper {
+		  /* Standard syntax */
+		  column-count: 2;
+		  column-gap: 40px;
+		  column-rule-style: solid;
+		  column-rule-width: 1px;
+		  column-rule-color: lightblue;
+		}
+	</style>
+
+	<body class="is-preload">
+
+		<!-- Wrapper-->
+			<div id="wrapper">
+
+				<!-- Nav -->
+					<nav id="nav">
+						<a href="#home" class="icon fa-user"><span>Me</span></a>
+						<a href="#rankings" class="icon fa-trophy"><span>Rankings</span></a>
+						<a href="#scenarios" class="icon fa-folder"><span>Scenarios</span></a>
+						<a href="#feed" class="icon fa-rss"><span>Feed</span></a>
+						<a href="#dataAnalytics" class="icon fa-info"><span>Analytics</span></a>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Me -->
+							<article id="home" class="panel intro">
+								<header>
+									<h1>{{ user }}</h1>
+									<p>{{ points }} points</p>
+								</header>
+								<a href="#work" class="jumplink pic">
+									<span class="arrow icon fa-chevron-right"><span>See my work</span></span>
+									<img src="{{ url_for('static', filename='images/me.jpg') }}" alt="" />
+								</a>
+							</article>
+
+						<!-- Scenarios -->
+							<article id="scenarios" class="panel">
+								<header>
+									<h2 style="text-align:center;">Scenarios</h2>
+									<hr>
+								</header>
+								<div>
+									<form action="{{ url_for('show_scenario') }}" method="post">
+										{% for scenario in scenario_urls %}
+										<h4>{{ scenario[0] }}</h4>
+                                        <table>
+                                            <tr>
+                                            	<!--
+                                                <td><img class="Scenario-Image" src="{{ scenario[1] }}"/></td>
+                                                -->
+                                                <td><p class="Description" >{{ scenario[2] }}</p></td>
+                                            </tr>
+                                        </table>
+										<button class="Play" type="submit" name="scenario_name" value="{{ scenario[0] }}" onclick="">Play</button>
+										<hr>
+										{% endfor %}
+										<input type="hidden" name="cur_iter" value="-1" />
+									</form>
+								</div>
+							</article>
+
+						<!-- Rankings -->
+							<article id="rankings" class="panel">
+								<header>
+									<h2 style="text-align:center;">Rankings</h2>
+									<hr>
+								</header>
+								<div>
+									{% for rank in rankings[0:top_n] %}
+									<h4>{{ rank[0] }}) {{ rank[2] }} - {{ rank[1] }}pts</h4>
+									<hr>
+									{% endfor %}
+									{% if rankings|length > top_n %}
+									<h5>.</h5><h5>.</h5><h5>.</h5><hr>
+									<h4>{{ rankings[top_n][0] }}) {{ rankings[top_n][2] }} - {{ rankings[top_n][1] }}pts</h4>
+									<hr>
+									{% endif %}
+								</div>
+							</article>
+
+
+
+							<!-- Feed -->
+							<article id="feed" class="panel">
+								<header>
+									<h2 style="text-align:center;">Feed</h2>
+									<hr>
+								</header>
+								<div>
+									<form action="{{ url_for('show_feed') }}" method="post">
+										{% for scenario in scenario_urls %}
+										<h4>{{ scenario[0] }}</h4>
+                                        <table>
+                                            <tr>
+                                            	<!--
+                                                <td><img class="Scenario-Image" src="{{ scenario[1] }}"/></td>
+                                                -->
+                                                <td><p class="Description" >{{ scenario[2] }}</p></td>
+                                            </tr>
+                                        </table>
+										<button class="Play" type="submit" name="scenario_name" value="{{ scenario[0] }}" onclick="">View Feed</button>
+										<hr>
+										{% endfor %}
+										<input type="hidden" name="cur_iter" value="-1" />
+									</form>
+								</div>
+							</article>
+
+
+							<!-- Data Analytics -->
+							<article id="dataAnalytics" class="panel">
+								<header>
+									<h2 style="text-align:center;">Data Analytics</h2>
+									<br>
+									<h3 style="text-align:center;">Georgia Tech Disability Services</h1>
+									<hr>
+								</header>
+								<div>
+									<h5>Locations:</h5>
+										<div style="float: left; width: 50%;">
+											<ul>
+											<li>CODA</li>
+											<li>Klaus</li>
+											<li>Student Center elevator</li>
+											</ul>
+										</div>
+										<div style="float: right; width: 50%;">
+										<ul>
+											<li>Love MRDC</li>
+											<li>Freshman Hill</li>
+											<li>MRDC</li>
+											</ul>
+										</div>
+									<h5>Solutions:</h5>
+										<div style="float: left; width: 50%;">
+											<ul>
+											<li>Elevators</li>
+											<li>Elevator access</li>
+											<li>Routes</li>
+											</ul>
+										</div>
+										<div style="float: right; width: 50%;">
+										<ul>
+											<li>Drivers</li>
+											<li>Buses</li>
+											<li>Golf Carts</li>
+											</ul>
+										</div>
+								</div>
+							</article>
+
+
+					</div>
+
+				<!-- Sign Out -->
+					<br>
+					<div>
+						<form action="{{ url_for('handle_signout') }}" method="post">
+							<button type="submit" value="Sign Out" onclick=""><i class="fa fa-sign-out fa-4x"></i></button>
+						</form>
+					</div>
+			</div>
+
+		<!-- Scripts -->
+			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/firebase.js') }}"></script>
+	    <script>
+	      // Initialize Firebase
+	      var config = {
+	        apiKey: "AIzaSyBEEdVVD1DaQ_bOxhQzXSPdRWrS-goqChc",
+	        authDomain: "ipcrowd-a8aea.firebaseapp.com",
+	        databaseURL: "https://ipcrowd-a8aea.firebaseio.com",
+	        projectId: "ipcrowd-a8aea",
+	        storageBucket: "ipcrowd-a8aea.appspot.com",
+	        messagingSenderId: "734706257829"
+	      };
+	      firebase.initializeApp(config);
+	    </script>
+	</body>
+</html>

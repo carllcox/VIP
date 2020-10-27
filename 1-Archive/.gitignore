@@ -1,0 +1,7 @@
+flask-server.log
+*.pyc
+*.log
+__pycache__/
+.DS_Store
+venv/
+static/Uploads/

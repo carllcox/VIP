@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+{% if current_user.is_authenticated %}
+<div class="jumbotron">
+    <h1 class="display-4">Hey {{ current_user.name.capitalize() }}!</h1>
+    <p class="lead">Let's get started!</p>
+</div>
+{% else %}
+<div class="jumbotron mt-3">
+    <h1 class="display-4">Hey there!</h1>
+    <p class="lead">Let's get you started! Click the button below to login/register!</p>
+    <a class="btn btn-primary" href="{{ url_for('login') }}"> Log in/Register </a>
+</div>
+{% endif %}
+
+{% endblock app_content %}

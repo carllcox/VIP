@@ -1,0 +1,127 @@
+2020-10-27 11:29:15,045 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:29:20,016 ERROR: Exception on / [GET] [in c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py:1892]
+Traceback (most recent call last):
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\ponei\github\VIP\app\routes.py", line 16, in index
+    subject = Subject.query.filter_by(approved=True).limit(25).all()
+NameError: name 'Subject' is not defined
+2020-10-27 11:29:20,288 ERROR: Exception on /favicon.ico [GET] [in c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py:1892]
+Traceback (most recent call last):
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1926, in dispatch_request
+    self.raise_routing_exception(req)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1908, in raise_routing_exception
+    raise request.routing_exception
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\ctx.py", line 350, in match_request
+    result = self.url_adapter.match(return_rule=True)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\werkzeug\routing.py", line 1945, in match
+    raise NotFound()
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\sqlalchemy\util\_collections.py", line 1020, in __call__
+    return self.registry[key]
+KeyError: 19724
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1816, in handle_user_exception
+    return self.handle_http_exception(e)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1744, in handle_http_exception
+    return handler(e)
+  File "C:\Users\ponei\github\VIP\app\errors.py", line 6, in not_found_error
+    return render_template('404.html'), 404
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\templating.py", line 136, in render_template
+    ctx.app.update_template_context(context)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 838, in update_template_context
+    context.update(func())
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask_login\utils.py", line 379, in _user_context_processor
+    return dict(current_user=_get_user())
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask_login\utils.py", line 346, in _get_user
+    current_app.login_manager._load_user()
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask_login\login_manager.py", line 318, in _load_user
+    user = self._user_callback(user_id)
+  File "C:\Users\ponei\github\VIP\app\models.py", line 12, in load_user
+    return User.query.get(int(id))
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask_sqlalchemy\__init__.py", line 514, in __get__
+    return type.query_class(mapper, session=self.sa.session())
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\sqlalchemy\orm\scoping.py", line 78, in __call__
+    return self.registry()
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\sqlalchemy\util\_collections.py", line 1022, in __call__
+    return self.registry.setdefault(key, self.createfunc())
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\sqlalchemy\orm\session.py", line 3300, in __call__
+    return self.class_(**local_kw)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask_sqlalchemy\__init__.py", line 138, in __init__
+    bind = options.pop('bind', None) or db.engine
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask_sqlalchemy\__init__.py", line 943, in engine
+    return self.get_engine()
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask_sqlalchemy\__init__.py", line 962, in get_engine
+    return connector.get_engine()
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask_sqlalchemy\__init__.py", line 556, in get_engine
+    self._engine = rv = self._sa.create_engine(sa_url, options)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask_sqlalchemy\__init__.py", line 972, in create_engine
+    return sqlalchemy.create_engine(sa_url, **engine_opts)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\sqlalchemy\engine\__init__.py", line 500, in create_engine
+    return strategy.create(*args, **kwargs)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\sqlalchemy\engine\strategies.py", line 87, in create
+    dbapi = dialect_cls.dbapi(**dbapi_args)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\sqlalchemy\dialects\postgresql\psycopg2.py", line 778, in dbapi
+    import psycopg2
+ModuleNotFoundError: No module named 'psycopg2'
+2020-10-27 11:29:37,833 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:29:39,051 ERROR: Exception on / [GET] [in c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py:1892]
+Traceback (most recent call last):
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\ponei\github\vip\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\ponei\github\VIP\app\routes.py", line 16, in index
+    subject = Subject.query.filter_by(approved=True).limit(25).all()
+NameError: name 'Subject' is not defined
+2020-10-27 11:37:43,186 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:37:48,576 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:38:02,055 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:38:22,552 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:41:00,019 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:42:41,236 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:42:52,522 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:42:58,253 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:44:31,015 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:44:36,366 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:44:44,675 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:44:47,961 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:45:56,041 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:47:33,852 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:47:41,332 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:47:43,712 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:48:50,698 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:48:57,259 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:49:46,248 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
+2020-10-27 11:49:54,412 INFO: IPCrowd startup [in C:\Users\ponei\github\VIP\app\__init__.py:57]
