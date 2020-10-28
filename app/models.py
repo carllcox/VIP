@@ -20,7 +20,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     contributionPoints = db.Column(db.Integer)
 
-    policies = db.relationship('Policy', backref='user', lazy='dynamic')
+    policies = db.relationship('Policy', backref='user', lazy=True)
     comments = db.relationship('Comment', backref = 'user', lazy = True)
     votes = db.relationship('Vote', backref='user', lazy = True)
 
@@ -65,14 +65,16 @@ class Policy(db.Model):
     
     
 class Vote(db.Model):
-    user_id = db.Column(db.Integer, primary_key=True, db.ForeignKey('user.id'))
-    policy_id_1 = db.Column(db.Integer, primary_key=True, db.ForeignKey('policy.id'))
-    policy_id_2 = db.Column(db.Integer, primary_key=True, db.ForeignKey('policy.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True, )
+    policy_id_1 = db.Column(db.Integer, db.ForeignKey('policy.id'), primary_key=True)
+    policy_id_2 = db.Column(db.Integer, db.ForeignKey('policy.id'), primary_key=True)
     
     economic = db.Column(db.Boolean)
     death = db.Column(db.Boolean)
     adherence = db.Column(db.Boolean)
     conflict = db.Column(db.Boolean)
+    
+    
    
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
