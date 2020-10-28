@@ -20,7 +20,9 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     contributionPoints = db.Column(db.Integer)
 
-    policies = db.relationship('Policy', backref='author', lazy='dynamic')
+    policies = db.relationship('Policy', backref='user', lazy='dynamic')
+    comments = db.relationship('Comment', backref = 'user', lazy = True)
+    votes = db.relationship('Vote', backref='user', lazy = True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -58,6 +60,9 @@ class Policy(db.Model):
     citation = db.Column(db.String(200))
     description = db.Column(db.String(250))
     tags = db.Column(db.String(15))
+    votes = db.relationship('Vote', backref='policy', lazy=True)
+    comments = db.relationship('Comment',backref='policy', lazy = True)
+    
     
 class Vote(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, db.ForeignKey('user.id'))
