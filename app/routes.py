@@ -19,22 +19,15 @@ def index():
 @app.route('/admin')
 @login_required
 def admin():
-    questions = Question.query.order_by(Question.timestamp).limit(20)
-    subjects = Subject.query.limit(25)
-    topics = Topic.query.all()
 
-    questionCount = db.session.query(func.count(Question.id), func.avg(Question.evaluations), Subject)\
-        .select_from(Subject).outerjoin(Question).group_by(Subject.id)
-
-    return render_template('admin.html', title='Admin Dashboard', subjects=subject, topics=topics, subjectcounts=questionCount, questions=questions)
+    return render_template('admin.html', title='Admin Dashboard')
 
 @app.route('/user/<username>')
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    questions = Question.query.filter_by(user_id=user.id).order_by(Question.id.desc()).limit(20)
-    subjects = Subject.query.limit(25)
-    return render_template('user.html', user=user, questions=questions, subjects=subjects)
+
+    return render_template('user.html', user=user)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
