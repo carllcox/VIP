@@ -60,21 +60,26 @@ class Policy(db.Model):
     citation = db.Column(db.String(200))
     description = db.Column(db.String(250))
     tags = db.Column(db.String(15))
-    votes = db.relationship('Vote', backref='policy', lazy=True)
+    policy_votes = db.relationship('PolicyVote', backref='policy', lazy=True)
     comments = db.relationship('Comment',backref='policy', lazy = True)
 
+class PolicyVote(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    policy_id = db.Column(db.Integer, db.ForeignKey('policy.id'))
+    vote_id = db.Column(db.Integer, db.ForeignKey('vote.id'))
 
 class Vote(db.Model):
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    policy_id_1 = db.Column(db.Integer, db.ForeignKey('policy.id'), primary_key=True)
-    policy_id_2 = db.Column(db.Integer, db.ForeignKey('policy.id'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    policy_id_1 = db.Column(db.Integer, db.ForeignKey('policy.id'))
+    policy_id_2 = db.Column(db.Integer, db.ForeignKey('policy.id'))
+
+    policy_votes = db.relationship('PolicyVote', backref='vote', lazy=True)
 
     economic = db.Column(db.Boolean)
     death = db.Column(db.Boolean)
     adherence = db.Column(db.Boolean)
     conflict = db.Column(db.Boolean)
-
-
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
