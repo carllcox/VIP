@@ -3,8 +3,8 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.models import User
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm
+from app.models import User, Policy
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, policyForm
 from app.email import send_password_reset_email
 from sqlalchemy.sql.expression import func
 from sqlalchemy.sql import except_
@@ -16,18 +16,50 @@ def index():
 
     return render_template('index.html', title='Home')
 
+@app.route('/about')
+def about():
+
+    return render_template('about.html', title='About')
+
 @app.route('/admin')
 @login_required
 def admin():
 
     return render_template('admin.html', title='Admin Dashboard')
 
-@app.route('/user/<username>')
+@app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
 
-    return render_template('user.html', user=user)
+    user = User.query.filter_by(username=username).first_or_404()
+    policies = Policy.query.filter_by(user_id=user.id)
+    tupList = [(policy.title, policy.description) for policy in policies]
+
+    form = policyForm()
+
+    if form.validate_on_submit():
+
+
+        policy = Policy(user_id = user.id , title = form.policy.data, description = form.description.data)
+
+        if policy:
+            db.session.add(policy)
+            db.session.commit()
+            flash('Policy successfully recorded')
+        else:
+            flash('Policy unsuccessfully recorded') 
+
+        return redirect(url_for('index'))
+
+    
+
+
+
+
+
+
+    return render_template('user.html', user=user, tupList = tupList, form = form)
+    
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

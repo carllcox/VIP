@@ -1,0 +1,106 @@
+2020-11-06 22:22:22,346 INFO: IPCrowd startup [in /Users/rohit/Downloads/VIP/app/__init__.py:57]
+2020-11-06 22:23:24,207 ERROR: Exception on /register [POST] [in /Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1276, in _execute_context
+    self.dialect.do_execute(
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 593, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/rohit/Downloads/VIP/app/routes.py", line 59, in register
+    if form.validate_on_submit():
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask_wtf/form.py", line 100, in validate_on_submit
+    return self.is_submitted() and self.validate()
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/wtforms/form.py", line 318, in validate
+    return super(Form, self).validate(extra)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/wtforms/form.py", line 150, in validate
+    if not field.validate(self, extra):
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/wtforms/fields/core.py", line 226, in validate
+    stop_validation = self._run_validation_chain(form, chain)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/wtforms/fields/core.py", line 246, in _run_validation_chain
+    validator(form, self)
+  File "/Users/rohit/Downloads/VIP/app/forms.py", line 24, in validate_username
+    user = User.query.filter_by(username=username.data).first()
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3429, in first
+    ret = list(self[0:1])
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3203, in __getitem__
+    return list(res)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3535, in __iter__
+    return self._execute_and_instances(context)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3560, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1011, in execute
+    return meth(self, multiparams, params)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1124, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1316, in _execute_context
+    self._handle_dbapi_exception(
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1510, in _handle_dbapi_exception
+    util.raise_(
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
+    raise exception
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1276, in _execute_context
+    self.dialect.do_execute(
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 593, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: user
+[SQL: SELECT user.id AS user_id, user.admin AS user_admin, user.username AS user_username, user.name AS user_name, user.email AS user_email, user.password_hash AS user_password_hash, user."contributionPoints" AS "user_contributionPoints" 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('RohitR13', 1, 0)]
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2020-11-06 22:37:45,163 INFO: IPCrowd startup [in /Users/rohit/Downloads/VIP/app/__init__.py:57]
+2020-11-06 22:38:03,846 INFO: IPCrowd startup [in /Users/rohit/Downloads/VIP/app/__init__.py:57]
+2020-11-06 22:38:31,592 INFO: IPCrowd startup [in /Users/rohit/Downloads/VIP/app/__init__.py:57]
+2020-11-06 22:38:38,961 INFO: IPCrowd startup [in /Users/rohit/Downloads/VIP/app/__init__.py:57]
+2020-11-06 22:40:37,107 ERROR: Exception on /user/RoRo [GET] [in /Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/Users/rohit/Downloads/VIP/app/routes.py", line 30, in user
+    return render_template('user.html', user=user)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/templating.py", line 138, in render_template
+    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/jinja2/environment.py", line 930, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/jinja2/environment.py", line 883, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/jinja2/environment.py", line 857, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/jinja2/loaders.py", line 115, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/templating.py", line 60, in get_source
+    return self._get_source_fast(environment, template)
+  File "/Users/rohit/Downloads/VIP/env/lib/python3.8/site-packages/flask/templating.py", line 89, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: user.html

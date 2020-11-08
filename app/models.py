@@ -50,7 +50,7 @@ class User(UserMixin, db.Model):
 class Policy(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    title = db.Column(db.String(64), unique=True)
+    title = db.Column(db.String(64))
 
     economic_votes = db.Column(db.Integer)
     death_votes = db.Column(db.Integer)
