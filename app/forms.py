@@ -60,3 +60,9 @@ class policyForm(FlaskForm):
     description = StringField('Description:', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+class RatePolicyForm1(FlaskForm):
+    submit1 = SubmitField('Upvote')
+
+class RatePolicyForm2(FlaskForm):
+    submit2 = SubmitField('Next')
+

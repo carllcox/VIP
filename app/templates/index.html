@@ -1,12 +1,74 @@
 {% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block app_content %}
 
 {% if current_user.is_authenticated %}
 <div class="jumbotron">
-    <h1 class="display-4">Hey {{ current_user.name.capitalize() }}!</h1>
-    <p class="lead">Let's get started!</p>
+    <h1 class="display-4"  style="color:lightskyblue;">Rate Policy:</h1>
+
+    <div class="jumbotron p-3 my-3 bg-light text-black">
+        <p class="lead"  style="color:green;"> <b>Policy:</b> {{policyTitle}}</p>
+        <hr>
+        <p class="lead" > <b>Description:</b> {{policyDescription}}</p>
+        <hr>
+        <p class="lead" > <b>Total Votes:</b> {{totalVotes}}</p>
+
+        {{ render_form(form1) }} 
+
+
+    </div>
+    {{ render_form(form2) }}
+
+    
+
 </div>
+
+
+
+
+
+
+<!--------hardcoded trending polices for the demo -------->
+<div class="jumbotron">
+    <h1 class="display-4"  style="color:tomato;">Trending Policies:</h1>
+
+    <div class="jumbotron p-3 my-3 bg-light text-black">
+        <p class="lead"  style="color:green;"> <b>Policy:</b> Social Distancing</p>
+        <hr>
+        <p class="lead" > <b>Description:</b> People should always be 6 feet apart and wear masks when going outside.
+        Especially in large groups, people are prone to spread coronavirus easier. It is best to be mindful of
+        our surroundings and social distance whenever possible!</p>
+    </div>
+
+    <div class="jumbotron p-3 my-3 bg-light text-black">
+        <p class="lead"  style="color:green;"> <b>Policy:</b> Coronavirus Scam Prevention</p>
+        <hr>
+        <p class="lead" > <b>Description:</b> Scammers have been leveraging the coronavirus epidemic to swindle people's money
+            and to steal personal information. For example, call scammers have recently been trying to sell fake vaccine and testing
+            kits. Phisphing emails about the coronavirus have been employed to infect user's devices with malware. The federal
+            government should allocate some resources in preventing the frequency of such scams. </p>
+    </div>
+
+    <div class="jumbotron p-3 my-3 bg-light text-black">
+        <p class="lead"  style="color:green;"> <b>Policy:</b> Avocados In. Bacon Out.</p>
+        <hr>
+        <p class="lead" > <b>Description:</b> A stronger immune system is a must in the battle against the 
+        coronavirus. There are many ways to boost our immune system, but a true expert knows that there 
+        is really only one product that can consistently perform. Avocados. This fruit (yes
+        fruit) is chockful of vitamins: A, C, E and is an exponential source of Glutathione, a powerful antioxidant 
+        associated with immune system health. States should mandate the production of more avocados and offer 
+        incentives for supermarkets, groceries, restaurants, and food stores alike to stock up more on 
+        this delightful food, while dishing out frozen pizza, instant noodles, and bacon off the menu. </p>
+    </div>
+
+</div>
+
+
+
+
+
+
 {% else %}
 <div class="jumbotron mt-3">
     <h1 class="display-4">Hey there!</h1>
