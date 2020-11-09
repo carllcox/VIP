@@ -21,6 +21,11 @@ def about():
 
     return render_template('about.html', title='About')
 
+@app.route('/data-analysis')
+def data_analysis():
+
+    return render_template('data_analysis.html', title='data-analysis')
+
 @app.route('/admin')
 @login_required
 def admin():
