@@ -56,6 +56,21 @@ def data_analysis():
 
     return render_template('data_analysis.html', title='data-analysis')
 
+@app.route('/leaderboard')
+def leaderboard():
+
+    policies = Policy.query.all()
+    tripList = sorted([[policy.title, policy.description, policy.total_votes] for policy in policies if type(policy.total_votes) == int],
+        key = lambda x: x[2], reverse = True)[:10]
+    
+    users = User.query.all()
+    tupList = sorted([(user.name, user.contributionPoints) for user in users if type(user.contributionPoints) == int], 
+    key = lambda x: x[1], reverse = True)[:10]
+
+
+
+    return render_template('leaderboard.html', title='Leaderboard', tripList= tripList, tupList = tupList)
+
 @app.route('/admin')
 @login_required
 def admin():
