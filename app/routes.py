@@ -20,6 +20,7 @@ def index():
     #There's an upvote error that needs to be fixed :(
 
     policies = Policy.query.all()
+    
     random_policy = random.choice([policy for policy in policies])
     policyTitle, policyDescription, totalVotes = random_policy.title, random_policy.description, random_policy.total_votes
 
