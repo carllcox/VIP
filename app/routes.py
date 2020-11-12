@@ -29,6 +29,7 @@ def index():
 
         if type(random_policy.total_votes) != int:
              random_policy.total_votes = 1
+             db.session.commit()
         else:
             random_policy.total_votes += 1
 
