@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block app_content %}
+
+<div class="jumbotron">
+    <h1 class="display-4">Your Total Points: {{contributionPoints}}</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">Policy Submission</h1>
+        <div class="row">
+            <div class="col-md-4">
+                {{ render_form(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <h1 class="display-4">Your Policies:</h1>
+
+        {% for title, description in tupList %}
+        <div class="container p-3 my-3 bg-dark text-white">
+            <p class="lead">{{title}}: {{description}}</p>
+        </div>
+        {% endfor %}
+
+</div>
+
+{% endblock app_content %}

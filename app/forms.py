@@ -54,3 +54,15 @@ class ResetPasswordForm(FlaskForm):
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Request Password Reset')
+
+class policyForm(FlaskForm):
+    policy = StringField('Coronavirus Policy:', validators=[DataRequired()])
+    description = StringField('Description:', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class RatePolicyForm1(FlaskForm):
+    submit1 = SubmitField('Upvote')
+
+class RatePolicyForm2(FlaskForm):
+    submit2 = SubmitField('Next')
+

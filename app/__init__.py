@@ -9,7 +9,9 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path = "/static", static_folder = "static")
+
+
 app.config.from_object(Config)
 login = LoginManager(app)
 db = SQLAlchemy(app)

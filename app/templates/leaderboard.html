@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<div class="jumbotron">
+
+    <h1 class="display-4"  style="color:tomato;">Top 10 Users Based On Points</h1>
+
+    {% for name, points in tupList %}
+    <div class="jumbotron p-3 my-3 bg-light text-black">
+        <p class="lead"  style="color:green;"> <b>User:</b> {{name}}</p>
+        <hr>
+        <p class="lead" > <b>Points:</b> {{points}}</p>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+<div class="jumbotron">
+
+
+
+    <h1 class="display-4"  style="color:tomato;">Top 10 Voted Policies</h1>
+
+    {% for policyTitle, policyDescription, totalVotes in tripList %}
+    <div class="jumbotron p-3 my-3 bg-light text-black">
+        <p class="lead"  style="color:green;"> <b>Policy:</b> {{policyTitle}}</p>
+        <hr>
+        <p class="lead" > <b>Description:</b> {{policyDescription}}</p>
+        <hr>
+        <p class="lead" > <b>Total Votes:</b> {{totalVotes}}</p>
+
+    </div>
+    {% endfor %}
+
+    
+
+</div>
+
+{% endblock app_content %}
