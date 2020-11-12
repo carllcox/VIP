@@ -3,15 +3,13 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.models import User, Policy
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, policyForm, RatePolicyForm1, RatePolicyForm2 
+from app.models import User, Policy, Vote, PolicyVote
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, policyForm, RatePolicyForm1, RatePolicyForm2
 
 from app.email import send_password_reset_email
 from sqlalchemy.sql.expression import func
 from sqlalchemy.sql import except_
 import random
-
-
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index',  methods=['GET', 'POST'])
@@ -19,30 +17,38 @@ def index():
 
     #There's an upvote error that needs to be fixed :(
 
-    policies = Policy.query.all()
-    
-    random_policy = random.choice([policy for policy in policies])
+    random_policy = Policy.query.order_by(func.random()).first()
+
     policyTitle, policyDescription, totalVotes = random_policy.title, random_policy.description, random_policy.total_votes
 
     form1 = RatePolicyForm1()
     form2 = RatePolicyForm2()
 
     if form1.submit1.data and form1.validate():
-        
+
         if type(random_policy.total_votes) != int:
              random_policy.total_votes = 1
         else:
             random_policy.total_votes += 1
 
+        user_policy_vote = Vote.query.filter_by(user_id=current_user.id, policy_id_1=random_policy.id).first()
 
-        db.session.commit()
-        
+        if user_policy_vote is not None:
+            vote = Vote(user_id=current_user.id, policy_id_1=random_policy.id)
+            db.session.add(vote)
+            db.session.commit()
+            db.session.refresh(vote)
+
+            policyVote = PolicyVote(policy_id = random_policy.id, vote_id = vote.id)
+            db.session.add(PolicyVote)
+            db.session.commit()
+        else:
+            flash("You've already voted on this random policy :)")
+
         return redirect(url_for('index'))
-    
+
     if form2.submit2.data and form2.validate():
         return redirect(url_for('index'))
-
-
 
     return render_template('index.html', title='Home', form1 = form1, form2 = form2,
         policyTitle = policyTitle, policyDescription = policyDescription, totalVotes = totalVotes)
@@ -60,15 +66,13 @@ def data_analysis():
 @app.route('/leaderboard')
 def leaderboard():
 
-    policies = Policy.query.all()
+    policies = Policy.query.limit(10).all()
     tripList = sorted([[policy.title, policy.description, policy.total_votes] for policy in policies if type(policy.total_votes) == int],
         key = lambda x: x[2], reverse = True)[:10]
-    
-    users = User.query.all()
-    tupList = sorted([(user.name, user.contributionPoints) for user in users if type(user.contributionPoints) == int], 
+
+    users = User.query.limit(10).all()
+    tupList = sorted([(user.name, user.contributionPoints) for user in users if type(user.contributionPoints) == int],
     key = lambda x: x[1], reverse = True)[:10]
-
-
 
     return render_template('leaderboard.html', title='Leaderboard', tripList= tripList, tupList = tupList)
 
@@ -104,13 +108,13 @@ def user(username):
             db.session.commit()
             flash('Policy successfully recorded. 20 points added to score!')
         else:
-            flash('Policy unsuccessfully recorded') 
+            flash('Policy unsuccessfully recorded')
 
         return redirect(url_for('index'))
 
-    
+
     return render_template('user.html', user=user, tupList = tupList, form = form, contributionPoints = user.contributionPoints)
-    
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
