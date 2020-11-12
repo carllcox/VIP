@@ -13,6 +13,7 @@ import random
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index',  methods=['GET', 'POST'])
+@login_required
 def index():
 
     #There's an upvote error that needs to be fixed :(
