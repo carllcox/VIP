@@ -7,3 +7,4 @@ venv/
 static/Uploads/
 env.bat
 logs/
+env/
