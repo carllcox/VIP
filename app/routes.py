@@ -4,55 +4,25 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, policyForm, RatePolicyForm1, RatePolicyForm2
-
 from app.email import send_password_reset_email
 from sqlalchemy.sql.expression import func
 from sqlalchemy.sql import except_
 import random
+from starterdata.loaddatabase import create_location_table
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index',  methods=['GET', 'POST'])
-@login_required
 def index():
 
-    #There's an upvote error that needs to be fixed :(
+    return render_template('about.html', title='About')
 
-    random_policy = Policy.query.order_by(func.random()).first()
+@app.route('/FSLKfjkdlja832587fda',  methods=['GET', 'POST'])
+def index():
+    print("start")
+    create_location_table("starterdata\ParsedData.csv")
+    print("done")
 
-    policyTitle, policyDescription, totalVotes = random_policy.title, random_policy.description, random_policy.total_votes
-
-    form1 = RatePolicyForm1()
-    form2 = RatePolicyForm2()
-
-    if form1.submit1.data and form1.validate():
-
-        if type(random_policy.total_votes) != int:
-             random_policy.total_votes = 1
-             db.session.commit()
-        else:
-            random_policy.total_votes += 1
-
-        user_policy_vote = Vote.query.filter_by(user_id=current_user.id, policy_id_1=random_policy.id).first()
-
-        if user_policy_vote is not None:
-            vote = Vote(user_id=current_user.id, policy_id_1=random_policy.id)
-            db.session.add(vote)
-            db.session.commit()
-            db.session.refresh(vote)
-
-            policyVote = PolicyVote(policy_id = random_policy.id, vote_id = vote.id)
-            db.session.add(PolicyVote)
-            db.session.commit()
-        else:
-            flash("You've already voted on this random policy :)")
-
-        return redirect(url_for('index'))
-
-    if form2.submit2.data and form2.validate():
-        return redirect(url_for('index'))
-
-    return render_template('index.html', title='Home', form1 = form1, form2 = form2,
-        policyTitle = policyTitle, policyDescription = policyDescription, totalVotes = totalVotes)
+    return render_template('500.html', title='What are you doing here?')
 
 @app.route('/about')
 def about():
@@ -64,57 +34,12 @@ def data_analysis():
 
     return render_template('data_analysis.html', title='data-analysis')
 
-@app.route('/leaderboard')
-def leaderboard():
-
-    policies = Policy.query.limit(10).all()
-    tripList = sorted([[policy.title, policy.description, policy.total_votes] for policy in policies if type(policy.total_votes) == int],
-        key = lambda x: x[2], reverse = True)[:10]
-
-    users = User.query.limit(10).all()
-    tupList = sorted([(user.name, user.contributionPoints) for user in users if type(user.contributionPoints) == int],
-    key = lambda x: x[1], reverse = True)[:10]
-
-    return render_template('leaderboard.html', title='Leaderboard', tripList= tripList, tupList = tupList)
 
 @app.route('/admin')
 @login_required
 def admin():
 
     return render_template('admin.html', title='Admin Dashboard')
-
-@app.route('/user/<username>', methods=['GET', 'POST'])
-@login_required
-def user(username):
-
-    user = User.query.filter_by(username=username).first_or_404()
-    policies = Policy.query.filter_by(user_id=user.id)
-    tupList = [(policy.title, policy.description) for policy in policies]
-
-    form = policyForm()
-
-    if form.validate_on_submit():
-
-        policy = Policy(user_id = user.id , title = form.policy.data, description = form.description.data)
-
-        if policy:
-            db.session.add(policy)
-
-            if (type(user.contributionPoints) != int):
-                user.contributionPoints = 20
-            else:
-                user.contributionPoints += 20
-
-
-            db.session.commit()
-            flash('Policy successfully recorded. 20 points added to score!')
-        else:
-            flash('Policy unsuccessfully recorded')
-
-        return redirect(url_for('index'))
-
-
-    return render_template('user.html', user=user, tupList = tupList, form = form, contributionPoints = user.contributionPoints)
 
 
 @app.route('/login', methods=['GET', 'POST'])

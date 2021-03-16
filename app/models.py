@@ -72,7 +72,7 @@ class Location(db.Model):
     average_busyness_level = db.Column(db.Integer)
 
     user_report = db.relationship('UserReport', backref='location', lazy=True)
-    covid_report = db.relationship('CovidReport', backref='location', lazy=True)
+    covid_report = db.relationship('CovidReports', backref='location', lazy=True)
     location_log = db.relationship('LocationLog', backref='location', lazy=True)
 
 # Note: Only approved comments are visible to public via API

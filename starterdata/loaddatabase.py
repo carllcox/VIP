@@ -15,7 +15,7 @@ from app import login
 from time import time
 import jwt
 from datetime import datetime
-from app.models import User, Policy, PolicyVote, Vote, Comment
+from app.models import User, Location
 
 #This function will create a separate table for csv file, if you have multiple csv files
 #Name of table will be extracted from file name. File name contains product name.
@@ -38,6 +38,26 @@ def create_user_table(file_name):
       user.set_password(row[5])
       db.session.add(user)
       db.session.commit()
+
+
+def create_location_table(file_name):
+  #Read file into dataframe
+  csv_data=pd.read_csv(file_name)
+
+  #Convert dataframe to list and store in same variable
+  csv_data=csv_data.values.tolist()
+
+  for row in csv_data:
+    #Each element in the list is an attribute for the table class
+    #Iterating through rows and inserting into table
+    comment = Location(
+        location_lat = row[0],
+        location_long = row[1],
+        location_name = row[2]
+      )
+    db.session.add(comment)
+    db.session.commit()
+
 
 def create_policy_table(file_name):
   #Read file into dataframe
