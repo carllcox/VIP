@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify, make_response
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
@@ -9,6 +9,7 @@ from sqlalchemy.sql.expression import func
 from sqlalchemy.sql import except_
 import random
 from starterdata.loaddatabase import create_location_table
+from app.models import User, Location
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index',  methods=['GET', 'POST'])
@@ -16,8 +17,15 @@ def index():
 
     return render_template('about.html', title='About')
 
+@app.route('/api/v1.0/randomlocation')
+def randomlocation():
+    randomlocation = Location.query.order_by(func.random()).first()
+
+    return jsonify({ 'lat' : randomlocation.location_lat, 'long' : randomlocation.location_long, 'name' : randomlocation.location_name })
+
+
 @app.route('/FSLKfjkdlja832587fda',  methods=['GET', 'POST'])
-def index():
+def loaddata():
     print("start")
     create_location_table("starterdata\ParsedData.csv")
     print("done")
