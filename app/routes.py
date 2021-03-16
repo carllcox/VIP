@@ -27,7 +27,7 @@ def randomlocation():
 @app.route('/FSLKfjkdlja832587fda',  methods=['GET', 'POST'])
 def loaddata():
     print("start")
-    create_location_table("starterdata\ParsedData.csv")
+    create_location_table("starterdata/ParsedData.csv")
     print("done")
 
     return render_template('500.html', title='What are you doing here?')
