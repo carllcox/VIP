@@ -23,6 +23,17 @@ def randomlocation():
 
     return jsonify({ 'lat' : randomlocation.location_lat, 'long' : randomlocation.location_long, 'name' : randomlocation.location_name })
 
+@app.route('/api/v1.0/getrandomlocation', methods=['GET'])
+def getrandomlocation():
+    randomlocation = Location.query.order_by(func.random()).first()
+
+    return jsonify({ 'lat' : randomlocation.location_lat, 'long' : randomlocation.location_long, 'name' : randomlocation.location_name })
+
+@app.route('/api/v1.0/postrandomlocation', methods=['POST'])
+def postrandomlocation():
+    randomlocation = Location.query.order_by(func.random()).first()
+
+    return jsonify({ 'lat' : randomlocation.location_lat, 'long' : randomlocation.location_long, 'name' : randomlocation.location_name })
 
 @app.route('/FSLKfjkdlja832587fda',  methods=['GET', 'POST'])
 def loaddata():
