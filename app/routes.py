@@ -41,6 +41,14 @@ def getlocation(id):
 
     return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name })
 
+@app.route('/api/v1.0/location/', methods=['GET'])
+def getrequestlocation():
+    location_id = request.form['location_id']
+
+    location = Location.query.filter_by(id=location_id).first()
+
+    return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name })
+
 @app.route('/api/v1.0/reviews/<location_id>', methods=['GET'])
 def getreviews(location_id):
     reviews = UserReport.query.filter_by(location_id = location_id)
