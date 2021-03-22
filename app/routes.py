@@ -9,7 +9,7 @@ from sqlalchemy.sql.expression import func
 from sqlalchemy.sql import except_
 import random
 from starterdata.loaddatabase import create_location_table
-from app.models import User, Location
+from app.models import User, Location, UserReport
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index',  methods=['GET', 'POST'])
@@ -41,6 +41,22 @@ def getlocation(id):
 
     return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name })
 
+@app.route('/api/v1.0/reviews/<location_id>', methods=['GET'])
+def getreviews(location_id):
+    reviews = UserReport.query.filter_by(location_id = location_id)
+
+    ids = []
+    ratings = []
+    rating_comments = []
+    for review in reviews:
+        ids.append(review.id)
+        ratings.append(review.review_rating)
+        if review.review_comment_approved:
+            rating_comments.append(review.review_comment)
+        else:
+            rating_comments.append(None)
+
+    return jsonify({ 'review_ids' : id, 'ratings' : ratings, 'rating_comments' : rating_comments})
 
 @app.route('/FSLKfjkdlja832587fda',  methods=['GET', 'POST'])
 def loaddata():
