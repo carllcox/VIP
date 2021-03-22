@@ -88,11 +88,11 @@ class UserReport(db.Model):
 
     policy_followed = db.Column(db.Integer)
     policy_comment = db.Column(db.String(200))
-    policy_comment_approved = db.Column(db.Boolean)
+    policy_comment_approved = db.Column(db.Boolean, default=False)
 
     review_rating = db.Column(db.Integer)
     review_comment = db.Column(db.String(200))
-    review_comment_approved = db.Column(db.Boolean)
+    review_comment_approved = db.Column(db.Boolean, default=False)
 
 # Privacy concern: Limit CovidReport entries to popular locations (>3 visits)
 # Note: NO direct API access (Doesn't output anything)
