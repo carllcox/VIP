@@ -21,25 +21,25 @@ def index():
 def randomlocation():
     randomlocation = Location.query.order_by(func.random()).first()
 
-    return jsonify({ 'id' : location.id, 'lat' : randomlocation.location_lat, 'long' : randomlocation.location_long, 'name' : randomlocation.location_name })
+    return jsonify({ 'id' : randomlocation.id, 'lat' : randomlocation.location_lat, 'long' : randomlocation.location_long, 'name' : randomlocation.location_name })
 
 @app.route('/api/v1.0/getrandomlocation', methods=['GET'])
 def getrandomlocation():
     randomlocation = Location.query.order_by(func.random()).first()
 
-    return jsonify({ 'id' : location.id, 'lat' : randomlocation.location_lat, 'long' : randomlocation.location_long, 'name' : randomlocation.location_name })
+    return jsonify({ 'id' : randomlocation.id, 'lat' : randomlocation.location_lat, 'long' : randomlocation.location_long, 'name' : randomlocation.location_name })
 
 @app.route('/api/v1.0/postrandomlocation', methods=['POST'])
 def postrandomlocation():
     randomlocation = Location.query.order_by(func.random()).first()
 
-    return jsonify({ 'id' : location.id, 'lat' : randomlocation.location_lat, 'long' : randomlocation.location_long, 'name' : randomlocation.location_name })
+    return jsonify({ 'id' : randomlocation.id, 'lat' : randomlocation.location_lat, 'long' : randomlocation.location_long, 'name' : randomlocation.location_name })
 
 @app.route('/api/v1.0/location/<id>', methods=['GET'])
 def getlocation(id):
     location = Location.query.filter_by(id=id).first()
 
-    return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name })
+    return jsonify({ 'id' : randomlocation.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name })
 
 @app.route('/api/v1.0/location/', methods=['GET'])
 def getrequestlocation():
@@ -47,7 +47,7 @@ def getrequestlocation():
 
     location = Location.query.filter_by(id=location_id).first()
 
-    return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name })
+    return jsonify({ 'id' : randomlocation.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name })
 
 @app.route('/api/v1.0/reviews/<location_id>', methods=['GET'])
 def getreviews(location_id):
