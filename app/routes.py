@@ -95,24 +95,22 @@ def postreviews(location_id):
     db.session.add(new_report)
     db.session.commit()
 
-    return jsonify({ 'Success' })
+    return jsonify({ 'Success' : True })
 
 @app.route('/api/v1.0/postid/<post_id>', methods=['POST'])
-def checkpost(post_id):
+def postid(post_id):
     report = CovidReports(id=post_id)
     db.session.add(report)
     db.session.commit()
 
-    return jsonify({ 'Success' })
+    return jsonify({ 'Success' : True })
 
 @app.route('/api/v1.0/checkpost/<post_id>')
 def checkpost(post_id):
     report = CovidReports.query.filter_by(id=post_id).first();
 
-    if (report is None):
-        return jsonify({ 'Failure, No post request recieved with this ID' });
-    else:
-        return jsonify({ 'Success, Post request was recieved with this ID!' });
+    return jsonify({ "Success" : report != None });
+
 
 @app.route('/FSLKfjkdlja832587fda',  methods=['GET', 'POST'])
 def loaddata():
