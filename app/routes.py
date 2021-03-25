@@ -9,7 +9,7 @@ from sqlalchemy.sql.expression import func
 from sqlalchemy.sql import except_
 import random
 from starterdata.loaddatabase import create_location_table
-from app.models import User, Location, UserReport
+from app.models import User, Location, UserReport, CovidReports
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index',  methods=['GET', 'POST'])
@@ -97,6 +97,22 @@ def postreviews(location_id):
 
     return jsonify({ 'Success' })
 
+@app.route('/api/v1.0/postid/<post_id>', methods=['POST'])
+def checkpost(post_id):
+    report = CovidReports(id=post_id)
+    db.session.add(report)
+    db.session.commit()
+
+    return jsonify({ 'Success' })
+
+@app.route('/api/v1.0/checkpost/<post_id>')
+def checkpost(post_id):
+    report = CovidReports.query.filter_by(id=post_id).first();
+
+    if (report is None):
+        return jsonify({ 'Failure, No post request recieved with this ID' });
+    else:
+        return jsonify({ 'Success, Post request was recieved with this ID!' });
 
 @app.route('/FSLKfjkdlja832587fda',  methods=['GET', 'POST'])
 def loaddata():
