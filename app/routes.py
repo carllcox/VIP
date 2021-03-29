@@ -49,6 +49,54 @@ def getrequestlocation():
 
     return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name })
 
+@app.route('/api/v1.0/location/<lat>/<long>', methods=['GET'])
+def getlocationinlat(lat, long):
+
+    lat = float(lat)
+    long = float(long)
+
+    location = Location.query.filter(Location.location_lat.between(lat - 0.0001, lat + 0.0001), Location.location_long.between(long - 0.0001, long + 0.0001)).order_by(func.random()).first()
+
+    return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name, 'mask_level' : location.current_mask_level, 'busyness_level' : location.current_busyness_level, 'computed_timestamp' : location.last_computed, 'average_mask_level' : location.average_mask_level, 'average_busyness_level' : location.average_busyness_level, 'policy_description' : location.policy_description })
+
+
+@app.route('/api/v1.0/location_in_bounds/bounds', methods=['GET'])
+def locations_in_bounds():
+    lower_lat = request.args['lower_lat']
+    upper_lat = request.args['upper_lat']
+    lower_long = request.args['lower_long']
+    upper_long = request.args['upper_long']
+
+    locations = Location.query.filter(Location.location_lat.between(lower_lat, upper_lat), Location.location_long.between(lower_long, upper_long)).limit(100)
+
+    ids = []
+    lats = []
+    longs = []
+    names = []
+    for location in locations:
+        ids.append(location.id)
+        lats.append(location.location_lat)
+        longs.append(location.location_long)
+        names.append(location.location_name)
+
+    return jsonify({ 'ids' : ids, 'lats' : lats, 'longs' : longs, 'names' : names})
+
+@app.route('/api/v1.0/search/<query_text>', methods=['GET'])
+def searchlocations(query_text):
+    locations = Location.query.filter(Location.location_name.ilike("%" + query_text + "%"))
+
+    ids = []
+    lats = []
+    longs = []
+    names = []
+    for location in locations:
+        ids.append(location.id)
+        lats.append(location.location_lat)
+        longs.append(location.location_long)
+        names.append(location.location_name)
+
+    return jsonify({ 'ids' : ids, 'lats' : lats, 'longs' : longs, 'names' : names})
+
 @app.route('/api/v1.0/reviews/<location_id>', methods=['GET'])
 def getreviews(location_id):
     reviews = UserReport.query.filter_by(location_id = location_id)
