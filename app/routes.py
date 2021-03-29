@@ -39,7 +39,7 @@ def postrandomlocation():
 def getlocation(id):
     location = Location.query.filter_by(id=id).first()
 
-    return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name })
+    return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name, 'mask_level' : location.current_mask_level, 'busyness_level' : location.current_busyness_level, 'computed_timestamp' : location.last_computed, 'average_mask_level' : location.average_mask_level, 'average_busyness_level' : location.average_busyness_level, 'policy_description' : location.policy_description })
 
 @app.route('/api/v1.0/location/', methods=['GET'])
 def getrequestlocation():
@@ -47,7 +47,7 @@ def getrequestlocation():
 
     location = Location.query.filter_by(id=location_id).first()
 
-    return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name })
+    return jsonify({ 'id' : location.id, 'lat' : location.location_lat, 'long' : location.location_long, 'name' : location.location_name, 'mask_level' : location.current_mask_level, 'busyness_level' : location.current_busyness_level, 'computed_timestamp' : location.last_computed, 'average_mask_level' : location.average_mask_level, 'average_busyness_level' : location.average_busyness_level, 'policy_description' : location.policy_description })
 
 @app.route('/api/v1.0/location/<lat>/<long>', methods=['GET'])
 def getlocationinlat(lat, long):
