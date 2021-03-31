@@ -112,22 +112,20 @@ def getreviews(location_id):
         else:
             rating_comments.append(None)
 
-    return jsonify({ 'location_id' : location_id, 'review_ids' : id, 'ratings' : ratings, 'rating_comments' : rating_comments})
-
+    return jsonify({ 'review_ids' : ids, 'ratings' : ratings, 'rating_comments' : rating_comments})
 
 @app.route('/api/v1.0/reviews/<location_id>', methods=['POST'])
 def postreviews(location_id):
     # TODO: Add data validation
 
-    location_id = request.form['location_id']
-    mask_level = request.form['mask_level']
-    busyness_level = request.form['busyness_level']
+    mask_level = request.args['mask_level']
+    busyness_level = request.args['busyness_level']
 
-    policy_followed = request.form['policy_followed']
-    policy_comment = request.form['policy_comment']
+    policy_followed = request.args['policy_followed']
+    policy_comment = request.args['policy_comment']
 
-    review_rating = request.form['review_rating']
-    review_comment = request.form['review_comment']
+    review_rating = request.args['review_rating']
+    review_comment = request.args['review_comment']
 
     if current_user.is_authenticated:
         new_report = UserReport(user_id=current_user.id, location_id=location_id, \
