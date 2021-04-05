@@ -294,10 +294,9 @@ def post_location_to_log(location_id):
     if current_user.is_authenticated:
         new_report = LocationLog(user_id=current_user.id, location_id=location_id, timestamp=timestamp)
     else:
-        return jsonify({ 'Failed: No associated user' : False })
+        new_report = LocationLog(location_id=location_id, timestamp=timestamp)
 
     db.session.add(new_report)
     db.session.commit()
 
     return jsonify({ 'Success' : True })
-
