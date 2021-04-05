@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request, jsonify, m
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, policyForm, RatePolicyForm1, RatePolicyForm2
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm, policyForm, RatePolicyForm1
 from app.email import send_password_reset_email
 from sqlalchemy.sql.expression import func
 from sqlalchemy.sql import except_
@@ -177,11 +177,18 @@ def data_analysis():
     return render_template('data_analysis.html', title='data-analysis')
 
 
-@app.route('/admin')
+@app.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin():
 
-    return render_template('admin.html', title='Admin Dashboard')
+    comment = UserReport.query.filter_by(review_comment_approved=False).first()
+    form = RatePolicyForm1()
+    if form.validate_on_submit():
+        comment.review_comment_approved = True
+        flash('Approved: ' + comment.review_comment)
+        return redirect(url_for('admin'))
+
+    return render_template('admin.html', title='Admin Dashboard', form = form, comment = comment.review_comment)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -212,7 +219,7 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, name=form.name.data)
+        user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()

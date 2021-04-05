@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block app_content %}
+
+{% if current_user.is_authenticated %}
+<div class="jumbotron">
+    <h1 class="display-4"  style="color:lightskyblue;">Approve Comment?:</h1>
+
+    <div class="jumbotron p-3 my-3 bg-light text-black">
+        <p class="lead"  style="color:green;"> <b>Comment:</b> {{comment}}</p>
+        <hr>
+
+        {{ render_form(form) }}
+        <a class="btn btn-warning" href="{{ url_for('admin') }}">Refresh</a>
+
+
+    </div>
+{% endif %}
+
+{% endblock app_content %}

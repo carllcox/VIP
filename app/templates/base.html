@@ -27,15 +27,6 @@
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
 
                 <ul class="navbar-nav ml-auto">
-                    {% if current_user.is_anonymous %}
-                    <li class="nav-item active">
-                        <a href="/login" class="btn btn-outline-primary btn-margin-left btn-sm" role="button">login</a>
-                    </li>
-
-                    {% else %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ url_for('user', username=current_user.username) }}">dashboard</a>
-                    </li>
                     {% if current_user.admin %}
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ url_for('admin') }}">ADMIN DASHBOARD</a>
@@ -44,7 +35,6 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ url_for('logout') }}">logout</a>
                     </li>
-                    {% endif %}
                 </ul>
             </div>
         </nav>
