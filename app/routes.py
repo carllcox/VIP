@@ -9,7 +9,7 @@ from sqlalchemy.sql.expression import func
 from sqlalchemy.sql import except_
 import random
 from starterdata.loaddatabase import create_location_table
-from app.models import User, Location, UserReport, CovidReports
+from app.models import User, Location, UserReport, CovidReports, LocationLog
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index',  methods=['GET', 'POST'])
@@ -271,3 +271,32 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
+
+@app.route('/api/v1.0/covid_report/<location_id>', methods=['POST'])
+def post_covid_report(location_id):
+
+    confirmed_date = request.args['confirmed_date']
+    estimated_start = request.args['busyness_level']
+
+    new_report = CovidReports(location_id=location_id, timestamp=confirmed_date, estimated_start=estimated_start)
+
+    db.session.add(new_report)
+    db.session.commit()
+
+    return jsonify({ 'Success' : True })
+
+@app.route('/api/v1.0/location_log/<location_id>', methods=['POST'])
+def post_location_to_log(location_id):
+
+    timestamp = request.args['timestamp']
+
+    if current_user.is_authenticated:
+        new_report = LocationLog(user_id=current_user.id, location_id=location_id, timestamp=timestamp)
+    else:
+        return jsonify({ 'Failed: No associated user' : False })
+
+    db.session.add(new_report)
+    db.session.commit()
+
+    return jsonify({ 'Success' : True })
+
