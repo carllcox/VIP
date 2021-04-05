@@ -185,6 +185,7 @@ def admin():
     form = RatePolicyForm1()
     if form.validate_on_submit():
         comment.review_comment_approved = True
+        db.session.commit()
         flash('Approved: ' + comment.review_comment)
         return redirect(url_for('admin'))
 
